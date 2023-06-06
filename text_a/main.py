@@ -1,15 +1,20 @@
 class TextFile:
-    def __init__(self, txt):
-        self.txt = txt
+    def __init__(self, file="text.txt", mode="r", encoding="UTF-8"):
+        self.file = file
+        self.mode = mode
+        self.encoding = encoding
 
-    
-    def read(self):
-        self.file = open(self.txt, "r", encoding="UTF-8)
+    def open_file(self):
+        with open(self.file, self.mode, encoding=self.encoding) as file_object:
+            return file_object.read()
+
+    def text_read(self):
+        text = self.open_file()
         return text
-    
-    def print_content(self):
-        text = self.file.read()
+
+    def print_text(self):
+        text = self.text_read()
         print(text)
 
-fileO = TextFile("text.txt")
-fileO.print_content()
+
+TextFile().print_text()
