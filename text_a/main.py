@@ -4,12 +4,11 @@ class TextFile:
 
     
     def read(self):
-        self.file = open(self.txt, "r", encoding="UTF-8")
-        text = self.file.read()
+        self.file = open(self.txt, "r", encoding="UTF-8)
         return text
     
     def print_content(self):
-        text = self.read()
+        text = self.file.read()
         print(text)
 
 fileO = TextFile("text.txt")
