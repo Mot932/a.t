@@ -1,8 +1,9 @@
-class TextFile:
+class Analizat_Text:
     def __init__(self, file="text.txt", mode="r", encoding="UTF-8"):
         self.file = file
         self.mode = mode
         self.encoding = encoding
+        self.text_read()
         self.print_text()
 
     def open_file(self):
@@ -10,11 +11,10 @@ class TextFile:
             return file_object.read()
 
     def text_read(self):
-        self.text = self.open_file()
+        self.txt = self.open_file()
 
     def print_text(self):
-        self.text_read()
-        print(self.text)
+        print(self.txt)
 
 
-text_file = TextFile()
+test_file = Analizat_Text()
