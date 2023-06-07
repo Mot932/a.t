@@ -4,17 +4,17 @@ class TextFile:
         self.mode = mode
         self.encoding = encoding
 
+
     def open_file(self):
-        with open(self.file, self.mode, encoding=self.encoding) as file_object:
-            return file_object.read()
+        with open(self.file, self.mode, encoding=self.encoding) as fileo:
+            self.txt = fileo.read()
 
     def text_read(self):
-        text = self.open_file()
-        return text
-
+        self.open_file()
+        
     def print_text(self):
-        text = self.text_read()
-        print(text)
+        self.text_read()
+        print(self.txt)
 
-
-TextFile().print_text()
+text_file = TextFile()
+text_file.print_text()
