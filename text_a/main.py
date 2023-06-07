@@ -3,18 +3,18 @@ class TextFile:
         self.file = file
         self.mode = mode
         self.encoding = encoding
-
+        self.print_text()
 
     def open_file(self):
-        with open(self.file, self.mode, encoding=self.encoding) as fileo:
-            self.txt = fileo.read()
+        with open(self.file, self.mode, encoding=self.encoding) as file_object:
+            return file_object.read()
 
     def text_read(self):
-        self.open_file()
-        
+        self.text = self.open_file()
+
     def print_text(self):
         self.text_read()
-        print(self.txt)
+        print(self.text)
+
 
 text_file = TextFile()
-text_file.print_text()
