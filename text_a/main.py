@@ -1,20 +1,26 @@
-class Analizat_Text:
-    def __init__(self, file="text.txt", mode="r", encoding="UTF-8"):
-        self.file = file
-        self.mode = mode
-        self.encoding = encoding
-        self.text_read()
+class TextAnalyser:
+    def __init__(self, file_name=None):
+        """ вызывает цепочку методов """
+        if file_name is None:
+            raise Exception("Не указан файл для анализа!")
+        self.read_file(file_name)
+        # TODO: Здесь нужен метод подготовки текста: вся строка текста должна стать строчными буквами
         self.print_text()
 
-    def open_file(self):
-        with open(self.file, self.mode, encoding=self.encoding) as file_object:
-            return file_object.read()
-
-    def text_read(self):
-        self.txt = self.open_file()
+    def read_file(self, file_name):
+        """ пытается открыть файл и считать его в строку """
+        try:
+            with open(file_name, "r", encoding="UTF-8") as file:
+                self.file = file  # здесь получается файловый объект
+                self.text = self.file.read()  # здесь получается строка текста
+        except FileNotFoundError:
+            raise Exception(f"Файл {file_name} не найден!")
+        
+        # TODO: бросить исключение, если прочитанный файл оказался пуст
 
     def print_text(self):
-        print(self.txt)
+        """ выводит строку текста на экран """
+        print(self.text)
 
 
-test_file = Analizat_Text()
+TextAnalyser(file_name="text.txt")
