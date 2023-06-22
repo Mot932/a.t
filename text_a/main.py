@@ -1,3 +1,8 @@
+import re
+from typing import NoReturn
+from string import punctuation
+
+
 class TextAnalyser:
     def __init__(self, file_name=None) -> None:
         """ вызывает цепочку методов """
@@ -23,12 +28,11 @@ class TextAnalyser:
             raise RuntimeError(f"Прочитанный файл: {self.file_name}, пуст!")
 
     def prepare_text(self) -> None:
-        """приводит текст к нижнему регистру"""
+        """приводит текст к нижнему регистру и очищает от знаков препинания"""
         self.text = self.text.lower()
-        for char in punctuation.replace("-", "—"):
-            self.text = self.text.replace(char, "")
-        self.words = self.text.split()
-    
+        clean_text = ''.join(re.findall(r'[\w\s-]', self.text))
+        self.words = clean_text.split()
+
     def print_text(self) -> None:
         """ выводит строку текста на экран """
         print(self.words)
