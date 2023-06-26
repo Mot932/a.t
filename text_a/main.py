@@ -3,22 +3,24 @@ import pymorphy3
 from typing import NoReturn
 
 class TextAnalyser:
-    def __init__(self, file_name=None) -> None:
+    def __init__(self, file_name=None, pos_list=[ "NOUN"]) -> None:
         """
         Инициализирует объект TextAnalyser.
-        Параметры:
+    `   Параметры:
         - file_name (строка, по умолчанию None): Имя файла для анализа.
+        - pos_list (список строк, по умолчанию ["VERB", "NOUN"]): Список желаемых частей речи.
         Возвращает: None.
         Выбрасывает исключение Exception, если не указан file_name.
-        Вызывает методы read_file(), check_empty_file(), prepare_text(), gwbp() и print_text().
+        Вызывает методы read_file(), check_empty_file(), prepare_text(), filter_words_by_pos() и print_text().
         """
         if file_name is None:
             raise Exception("Не указан файл для анализа!")
         self.file_name = file_name
+        self.pos_list = pos_list
         self.read_file()
         self.check_empty_file()
         self.prepare_text()
-        self.gwbp()
+        self.filter_words_by_pos()
         self.print_text()
 
     def read_file(self) -> None | NoReturn:
@@ -53,33 +55,29 @@ class TextAnalyser:
         clean_text = ''.join(re.findall(r'[\w\s-]', self.text))
         self.words = clean_text.split()
 
-    def gwbp(self, pos_list=["VERB", "NOUN"]) -> None:
+    def filter_words_by_pos(self) -> list:
         """
         Фильтрует слова по заданным частям речи с использованием библиотеки pymorphy3.
-        Параметры:
-        - pos_list (список строк, по умолчанию ["VERB", "NOUN"]): Список желаемых частей речи.
-        Возвращает: None.
+        Возвращает: list.
         """
         morph = pymorphy3.MorphAnalyzer()
         self.words_by_pos = []
 
         for word in self.words:
-            parsed_word = morph.parse(word)
-            found_word = False
-            for parse in parsed_word:
-                if any(pos in parse.tag for pos in pos_list):
-                    self.words_by_pos.append(parse.normal_form)
-                    break
+            parsed_word = morph.parse(word)[0]
+            pos = parsed_word.tag.POS
+            if pos in self.pos_list:
+                self.words_by_pos.append(parsed_word.normal_form)
+
 
     def print_text(self) -> None:
         """
         Выводит исходные слова, общее количество слов и отфильтрованные слова.
         Возвращает: None.
         """
-        print(self.words)
-        print(f"Отфильтрованные слова: {self.words_by_pos}")
+        print(f"Обычных слов:{self.words}")
         print(f"В этом тексте {len(self.words)} слов")
-        print(f"В этом тексте {len(self.words_by_pos)} отфильтрованных слов")
-        
+        print(f"Отфильтрованные слова: {self.words_by_pos}")
+        print(f"В этом тексте {len(self.words_by_pos)} Отфильтрованных слов")
 
-TextAnalyser(file_name="text.txt")
+TextAnalyser(file_name="text.txt", pos_list=["VERB", "NOUN"])
