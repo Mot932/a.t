@@ -6,7 +6,7 @@ from PIL import Image
 from typing import NoReturn
 
 class TextAnalyser:
-    def __init__(self, file_name=None, pos_list=['NOUN']) -> None:
+    def __init__(self, file_name=None, pos_list=['VERB', 'NOUN']) -> None:
         """
         Инициализирует объект TextAnalyser.
         Параметры:
