@@ -98,3 +98,4 @@ class TextAnalyser:
 
 
 TextAnalyser(file_name='text.txt', pos_list=['VERB', 'NOUN'])
+
